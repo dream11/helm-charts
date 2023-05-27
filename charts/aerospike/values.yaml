@@ -243,7 +243,6 @@ serviceAccount:
   automountServiceAccountToken: true
 
 
-
 ## @section Traffic Exposure Parameters
 ##
 
