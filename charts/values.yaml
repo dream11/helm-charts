@@ -51,7 +51,7 @@ extraDeploy: []
 ##
 image:
   registry: docker.io
-  repository: aerospike/aerospike-server-enterprise
+  repository: aerospike
   tag: 5.2.0.10
   ## Specify a imagePullPolicy
   ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
