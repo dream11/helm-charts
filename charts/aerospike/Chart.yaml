@@ -11,3 +11,6 @@ dependencies:
     tags:
       - bitnami-common
     version: 1.x.x
+maintainers:
+  - name: Dream11
+    url: https://www.dream11.com/
