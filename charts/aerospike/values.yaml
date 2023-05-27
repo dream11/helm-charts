@@ -85,7 +85,18 @@ aerospike:
   ##      config:
   ##        filesize: 4G
   ##        data-in-memory: true
-  namespaces: []
+  namespaces:
+    - name: test
+      config:
+        memory-size: 4G
+        replication-factor: 1
+        default-ttl: 30d
+        nsup-period: 120
+      storageEngine:
+        type: device
+        config:
+          filesize: 4G
+          data-in-memory: true
 
   ## Specify aerospike xdr configuration
   ## @param aerospike.xdr.enabled Enable aerospike cross datacenter replication
