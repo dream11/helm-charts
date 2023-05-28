@@ -63,18 +63,18 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Aerospike parameters
 
-| Name                         | Description                                                      | Value                                   |
-| ---------------------------- | ---------------------------------------------------------------- | --------------------------------------- |
-| `image.registry`             | Aerospike image registry                                         | `docker.io`                             |
-| `image.repository`           | Aerospike image repository                                       | `aerospike/aerospike-server-enterprise` |
-| `image.tag`                  | Aerospike image tag (immutable tags are recommended)             | `5.2.0.10`                              |
-| `image.pullPolicy`           | image pull policy                                                | `IfNotPresent`                          |
-| `image.pullSecrets`          | Aerospike image pull secrets                                     | `[]`                                    |
-| `aerospike.namespaces`       | Aerospike namespaces configuration                               | `[]`                                    |
-| `aerospike.xdr.enabled`      | Enable aerospike cross datacenter replication                    | `false`                                 |
-| `aerospike.xdr.dcs`          | Aerospike cross datacenter replication datacenters configuration | `[]`                                    |
-| `aerospike.features.content` | Aerospike licence content                                        | `nil`                                   |
-| `extraEnvVars`               | Extra environment variables to be set on aerospike container     | `[]`                                    |
+| Name                         | Description                                                      | Value          |
+| ---------------------------- | ---------------------------------------------------------------- | -------------- |
+| `image.registry`             | Aerospike image registry                                         | `docker.io`    |
+| `image.repository`           | Aerospike image repository                                       | `aerospike`    |
+| `image.tag`                  | Aerospike image tag (immutable tags are recommended)             | `ce-6.3.0.4`   |
+| `image.pullPolicy`           | image pull policy                                                | `IfNotPresent` |
+| `image.pullSecrets`          | Aerospike image pull secrets                                     | `[]`           |
+| `aerospike.namespaces`       | Aerospike namespaces configuration                               | `[]`           |
+| `aerospike.xdr.enabled`      | Enable aerospike cross datacenter replication                    | `false`        |
+| `aerospike.xdr.dcs`          | Aerospike cross datacenter replication datacenters configuration | `[]`           |
+| `aerospike.features.content` | Aerospike licence content                                        | `nil`          |
+| `extraEnvVars`               | Extra environment variables to be set on aerospike container     | `[]`           |
 
 ### Statefulset parameters
 

@@ -1,3 +1,4 @@
+replicaCount: 3
 aerospike:
   namespaces:
     - name: test

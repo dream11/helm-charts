@@ -12,7 +12,6 @@ data:
     service {
       user root
       group root
-      paxos-single-replica-limit 1
       pidfile /var/run/aerospike/asd.pid
       proto-fd-max 15000
       {{- if .Values.aerospike.features.content }}
