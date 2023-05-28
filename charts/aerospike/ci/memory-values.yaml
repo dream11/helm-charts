@@ -1,0 +1,10 @@
+aerospike:
+  namespaces:
+    - name: test
+      config:
+        memory-size: 4G
+        replication-factor: 1
+        default-ttl: 30d
+        nsup-period: 120
+      storageEngine:
+        type: memory

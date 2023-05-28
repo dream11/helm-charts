@@ -1,0 +1,7 @@
+### IntelliJ IDEA ###
+*.iws
+*.iml
+*.ipr
+.idea/**
+*/*.iml
+charts/*/charts/**

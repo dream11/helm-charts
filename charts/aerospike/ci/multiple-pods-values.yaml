@@ -1,0 +1,14 @@
+replicaCount: 3
+aerospike:
+  namespaces:
+    - name: test
+      config:
+        memory-size: 4G
+        replication-factor: 3
+        default-ttl: 30d
+        nsup-period: 120
+      storageEngine:
+        type: device
+        config:
+          filesize: 4G
+          data-in-memory: true
