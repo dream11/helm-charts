@@ -56,7 +56,8 @@ spec:
               command:
                 - /bin/bash
                 - -c
-                - aql
+                - |
+                  asadm --execute info
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
@@ -69,7 +70,8 @@ spec:
               command:
                 - /bin/bash
                 - -c
-                - aql
+                - |
+                  asadm --execute info
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
@@ -83,7 +85,8 @@ spec:
               command:
                 - /bin/bash
                 - -c
-                - aql
+                - |
+                  asadm --execute info
             initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.startupProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
