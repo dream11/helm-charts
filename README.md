@@ -1,2 +1,2 @@
-# aerospike-helm-chart
-Helm charts packaged by dream11
+# Helm Charts
+Helm charts packaged by Dream11
