@@ -1,8 +1,8 @@
 apiVersion: v2
 name: aerospike
-description: Aerospike helm charts
+description: Aerospike helm chart
 version: 1.0.0
-appVersion: "5.6.0.15"
+appVersion: "6.3.0.4"
 keywords:
   - aerospike
 dependencies:

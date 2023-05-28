@@ -52,7 +52,7 @@ extraDeploy: []
 image:
   registry: docker.io
   repository: aerospike
-  tag: 5.2.0.10
+  tag: ce-6.3.0.4
   ## Specify a imagePullPolicy
   ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
@@ -85,18 +85,7 @@ aerospike:
   ##      config:
   ##        filesize: 4G
   ##        data-in-memory: true
-  namespaces:
-    - name: test
-      config:
-        memory-size: 4G
-        replication-factor: 1
-        default-ttl: 30d
-        nsup-period: 120
-      storageEngine:
-        type: device
-        config:
-          filesize: 4G
-          data-in-memory: true
+  namespaces: []
 
   ## Specify aerospike xdr configuration
   ## @param aerospike.xdr.enabled Enable aerospike cross datacenter replication
@@ -252,7 +241,6 @@ serviceAccount:
   ## @param serviceAccount.automountServiceAccountToken Automount API credentials for a service account.
   ##
   automountServiceAccountToken: true
-
 
 ## @section Traffic Exposure Parameters
 ##
