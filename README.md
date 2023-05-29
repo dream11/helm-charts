@@ -1,4 +1,6 @@
 # Helm Chart Repository
+[![Continuous Integration](https://github.com/dream11/helm-charts/actions/workflows/ci.yml/badge.svg)](https://github.com/dream11/helm-charts/actions/workflows/ci.yml)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 Welcome to the Helm Chart Repository! This repository contains a collection of Helm charts for various applications and services. Helm charts are a convenient way to package, deploy, and manage applications on Kubernetes clusters.
 
