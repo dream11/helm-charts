@@ -21,8 +21,8 @@ This chart bootstraps an [Aerospike](https://hub.docker.com/r/aerospike/aerospik
 To install the chart with the release name `my-release`:
 
 ```console
-git clone https://github.com/dream11/d11-helm-charts
-cd d11-helm-charts
+git clone https://github.com/dream11/helm-charts
+cd helm-charts
 helm install my-release ./charts/aerospike
 ```
 
