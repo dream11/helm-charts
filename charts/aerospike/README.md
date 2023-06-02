@@ -21,9 +21,8 @@ This chart bootstraps an [Aerospike](https://hub.docker.com/r/aerospike/aerospik
 To install the chart with the release name `my-release`:
 
 ```console
-git clone https://github.com/dream11/helm-charts
-cd helm-charts
-helm install my-release ./charts/aerospike
+helm repo add dream11 https://dream11.github.io/helm-charts
+helm install my-release dream11/aerospike
 ```
 
 These commands deploy one node with Aerospike on the Kubernetes cluster in the default configuration. The [Parameters](#parameters) section lists the parameters that can be configured during installation.
