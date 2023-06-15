@@ -23,22 +23,20 @@ To get started with using the Helm Chart Repository, follow these steps:
 1. Install Helm on your local machine. You can find installation instructions in the [Helm documentation](https://helm.sh/docs/intro/install/).
 2. Add the Helm Chart Repository to your local Helm configuration:
 
-   ```shell
-   helm repo add chart-repo <repository-url>
+   ```console
+   helm repo add dream11 https://dream11.github.io/helm-charts
    ```
-
-   Replace `<repository-url>` with the actual URL of this repository.
-
+   
 3. Search for available charts:
 
-   ```shell
-   helm search repo chart-repo
+   ```console
+   helm search repo dream11
    ```
 
 4. Install a chart:
 
-   ```shell
-   helm install my-release chart-repo/<chart-name>
+   ```console
+   helm install my-release dream11/<chart-name>
    ```
 
    Replace `<chart-name>` with the name of the chart you want to install.
@@ -70,8 +68,8 @@ To use a specific Helm chart from this repository, follow the steps below:
 2. Review the chart's `README.md` file for specific instructions, configuration options, and any prerequisites.
 3. Install the chart using the `helm install` command:
 
-   ```shell
-   helm install my-release chart-repo/<chart-name>
+   ```console
+   helm install my-release dream11/<chart-name>
    ```
 
    Replace `<chart-name>` with the name of the chart you want to install.

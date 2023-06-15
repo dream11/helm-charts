@@ -5,6 +5,9 @@ on:
     types:
       - synchronize
       - opened
+    paths:
+      - 'charts/**'
+      - '!charts/**/README.md'
   push:
     branches:
       - master
