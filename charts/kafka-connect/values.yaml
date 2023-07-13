@@ -119,7 +119,7 @@ service:
   ##
   sessionAffinityConfig: {}
 
-##The Kafka Connect properties
+## The Kafka Connect properties
 ## ref: https://docs.confluent.io/current/connect/userguide.html#configuring-workers
 configurationOverrides:
   ##  @param configurationOverrides.plugin.path the plugin path in the file system
@@ -212,7 +212,7 @@ prometheus:
       ## pullSecrets:
       ##   - myRegistryKeySecretName
       ##
-      pullSecrets: [ ]
+      pullSecrets: []
     ## @param prometheus.jmx.resources JMX Exporter resources
     ## Resources configuration for the JMX exporter container.
     ## See the `resources` documentation above for details.
