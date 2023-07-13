@@ -1,7 +1,7 @@
 {{/* vim: set filetype=mustache: */}}
 
 {{/*
-Return the Aerospike configuration configmap
+Return the jmx configuration configmap
 */}}
 {{- define "jmx.configmapName" -}}
 {{- printf "%s-jmx-configuration" (include "common.names.fullname" .) -}}
