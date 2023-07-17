@@ -25,7 +25,7 @@ global:
 ## @param image.registry Kafka connect image registry
 ## @param image.repository Kafka connect image repository
 ## @param image.tag Kafka connect image tag (immutable tags are recommended)
-## @param image.pullPolicy image pull policy
+## @param image.pullPolicy Image pull policy
 ## @param image.pullSecrets Kafka connect image pull secrets
 ##
 image:
@@ -58,7 +58,7 @@ commonLabels: {}
 ##
 commonAnnotations: {}
 
-## @param replicaCount to decide the number of kafka connect pod replicas
+## @param replicaCount Decides the number of kafka connect pod replicas
 ##
 replicaCount: 1
 
@@ -74,7 +74,7 @@ service:
   ##
   type: ClusterIP
   ## @param service.ports.kafkaConnect Kafka connect service Port
-  ## @param service.ports.jmx jmx Port
+  ## @param service.ports.jmx JMX Port
   ports:
     kafkaConnect: 8083
     jmx: 5556
@@ -122,26 +122,26 @@ service:
 ## The Kafka Connect properties
 ## ref: https://docs.confluent.io/current/connect/userguide.html#configuring-workers
 configurationOverrides:
-  ##  @param configurationOverrides.plugin.path the plugin path in the file system
+  ##  @param configurationOverrides.plugin.path The plugin path in the file system
   "plugin.path": "/usr/share/java,/usr/share/confluent-hub-components"
-  ##  @param configurationOverrides.key.converter the serializer for keys
+  ##  @param configurationOverrides.key.converter The serializer for keys
   "key.converter": "io.confluent.connect.avro.AvroConverter"
-  ##  @param configurationOverrides.value.converter the serializer for values
+  ##  @param configurationOverrides.value.converter The serializer for values
   "value.converter": "io.confluent.connect.avro.AvroConverter"
-  ##  @param configurationOverrides.key.converter.schemas.enable enable schemas for key converter
+  ##  @param configurationOverrides.key.converter.schemas.enable Enable schemas for key converter
   "key.converter.schemas.enable": "false"
-  ##  @param configurationOverrides.value.converter.schemas.enable enable schemas for value converter
+  ##  @param configurationOverrides.value.converter.schemas.enable Enable schemas for value converter
   "value.converter.schemas.enable": "false"
-  ##  @param configurationOverrides.internal.key.converter internal key converter
+  ##  @param configurationOverrides.internal.key.converter Internal key converter
   "internal.key.converter": "org.apache.kafka.connect.json.JsonConverter"
-  ##  @param configurationOverrides.internal.value.converter internal value converter
+  ##  @param configurationOverrides.internal.value.converter Internal value converter
   "internal.value.converter": "org.apache.kafka.connect.json.JsonConverter"
-  ##  @param configurationOverrides.config.storage.replication.factor config storage replication factor
-  "config.storage.replication.factor": "3"
-  ##  @param configurationOverrides.offset.storage.replication.factor offset storage replication factor
-  "offset.storage.replication.factor": "3"
-  ##  @param configurationOverrides.status.storage.replication.factor status storage replication factor
-  "status.storage.replication.factor": "3"
+  ##  @param configurationOverrides.config.storage.replication.factor Config storage replication factor
+  "config.storage.replication.factor": "1"
+  ##  @param configurationOverrides.offset.storage.replication.factor Offset storage replication factor
+  "offset.storage.replication.factor": "1"
+  ##  @param configurationOverrides.status.storage.replication.factor Status storage replication factor
+  "status.storage.replication.factor": "1"
 
 ## @param heapOptions Kafka Connect JVM Heap Option
 heapOptions: "-Xms512M -Xmx512M"
@@ -190,7 +190,7 @@ prometheus:
   ## ref: https://github.com/prometheus/jmx_exporter
   jmx:
     ## @param prometheus.jmx.enabled JMX Exporter
-    enabled: true
+    enabled: false
 
     ## @param prometheus.jmx.image.registry JMX Exporter image registry
     ## @param prometheus.jmx.image.repository JMX Exporter image repository
@@ -219,11 +219,11 @@ prometheus:
     resources: {}
 
 ## You can list load balanced service endpoint, or list of all brokers (which is hard in K8s).  e.g.:
-## @param kafka.bootstrapServers list of the kafka brokers ex."PLAINTEXT://dozing-prawn-kafka-headless:9092"
+## @param kafka.bootstrapServers List of the kafka brokers ex."PLAINTEXT://dozing-prawn-kafka-headless:9092"
 kafka:
   bootstrapServers: ""
 
-## @param schema-registry.url schema-registry url
+## @param schema-registry.url Schema-Registry url
 # If the Kafka Chart is disabled a URL and port are required to connect
 ## e.g. gnoble-panther-schema-registry:8081
 schema-registry:
@@ -249,17 +249,36 @@ secrets:
   # username: kafka123
   # password: connect321
 
-## @param livenessProbe the livenessProbe for the kafka connect pods
-## "livenessProbe" is required only for the edge cases where the custom script to be ran takes too much time
-## and errors by the ENTRYPOINT are ignored by the container
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+## Configure Liveness and Readiness Probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+## @param livenessProbe.enabled Enable liveness probe
+## @param livenessProbe.initialDelaySeconds Delay before first running liveness probe
+## @param livenessProbe.periodSeconds The period between consecutive liveness probes
+## @param livenessProbe.timeoutSeconds The response timeout for the livenessProbe
+## @param livenessProbe.failureThreshold The consecutive threshold after which the livenessProbe is marked failed
+## @param livenessProbe.successThreshold The consecutive threshold after which the livenessProbe is marked failed
 livenessProbe:
-  # httpGet:
-  #   path: /connectors
-  #   port: 8083
-  # initialDelaySeconds: 30
-  # periodSeconds: 5
-  # failureThreshold: 10
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+## @param readinessProbe.enabled Enable readiness probe
+## @param readinessProbe.initialDelaySeconds Delay before first running readinessProbe probe
+## @param readinessProbe.periodSeconds The period between consecutive readinessProbe probes
+## @param readinessProbe.timeoutSeconds The response timeout for the readinessProbe
+## @param readinessProbe.failureThreshold The consecutive threshold after which the readinessProbe is marked failed
+## @param readinessProbe.successThreshold The consecutive threshold after which the readinessProbe is marked failed
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
 
 ## Kafka connect pods ServiceAccount
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/

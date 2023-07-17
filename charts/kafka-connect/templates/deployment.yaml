@@ -90,10 +90,6 @@ spec:
             - name: {{ printf "CONNECT_%s" $key | replace "." "_" | upper | quote }}
               value: {{ $value | quote }}
             {{- end }}
-            {{- range $key, $value := .Values.customEnv }}
-            - name: {{ $key | quote }}
-              value: {{ $value | quote }}
-            {{- end }}
             {{- if .Values.jmx.port }}
             - name: KAFKA_JMX_PORT
               value: "{{ .Values.jmx.port }}"
@@ -101,19 +97,28 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
-        {{- if .Values.customEnv.CUSTOM_SCRIPT_PATH }}
-          command:
-            - /bin/bash
-            - -c
-            - |
-              /etc/confluent/docker/run &
-              $CUSTOM_SCRIPT_PATH
-              sleep infinity
-          {{- if .Values.livenessProbe }}
+          {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
-{{ toYaml .Values.livenessProbe | trim | indent 12 }}
+            httpGet:
+              path: /
+              port: tcp
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           {{- end }}
-        {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: tcp
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          {{- end }}
           {{- if .Values.volumeMounts }}
           volumeMounts:
 {{ toYaml .Values.volumeMounts | indent 10 }}
