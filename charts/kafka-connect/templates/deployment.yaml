@@ -1,0 +1,138 @@
+{{- if .Capabilities.APIVersions.Has "apps/v1" }}
+apiVersion: apps/v1
+{{- else }}
+apiVersion: apps/v1beta2
+{{- end }}
+kind: Deployment
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+      {{- if .Values.podLabels }}
+      {{- toYaml .Values.podLabels | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.podAnnotations }}
+      annotations:
+        {{- if .Values.podAnnotations }}
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+        {{- end }}
+      {{- end }}
+    spec:
+      containers:
+        {{- if .Values.prometheus.jmx.enabled }}
+        - name: prometheus-jmx-exporter
+          image: {{ include "prometheus.image" . }}
+          imagePullPolicy: {{ .Values.prometheus.jmx.image.pullPolicy | quote }}
+          command:
+          - java
+          - -XX:+UnlockExperimentalVMOptions
+          - -XX:+UseCGroupMemoryLimitForHeap
+          - -XX:MaxRAMFraction=1
+          - -XshowSettings:vm
+          - -jar
+          - jmx_prometheus_httpserver.jar
+          - {{ .Values.service.ports.jmx | quote }}
+          - /etc/jmx-kafka-connect/jmx-kafka-connect-prometheus.yml
+          ports:
+          - containerPort: {{ .Values.service.ports.jmx }}
+          resources: {{- include "common.tplvalues.render" ( dict "value" .Values.prometheus.jmx.resources "context" $ ) | nindent 12 }}
+          volumeMounts:
+          - name: jmx-config
+            mountPath: /etc/jmx-kafka-connect
+        {{- end }}
+        - name: {{ template "kafka-connect.name" . }}-server
+          image: {{ include "kafka-connect.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - name: kafka-connect
+              containerPort: {{ .Values.service.ports.kafkaConnect }}
+              protocol: TCP
+            {{- if .Values.prometheus.jmx.enabled }}
+            - containerPort: {{ .Values.service.ports.jmx }}
+              name: jmx
+            {{- end }}
+          resources: {{- include "common.tplvalues.render" ( dict "value" .Values.resources "context" $ ) | nindent 12 }}
+          env:
+            - name: CONNECT_REST_ADVERTISED_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: CONNECT_BOOTSTRAP_SERVERS
+              value: {{ template "kafka-connect.kafka.bootstrapServers" . }}
+            - name: CONNECT_GROUP_ID
+              value: {{ template "kafka-connect.groupId" . }}
+            - name: CONNECT_CONFIG_STORAGE_TOPIC
+              value: {{ template "kafka-connect.fullname" . }}-config
+            - name: CONNECT_OFFSET_STORAGE_TOPIC
+              value: {{ template "kafka-connect.fullname" . }}-offset
+            - name: CONNECT_STATUS_STORAGE_TOPIC
+              value: {{ template "kafka-connect.fullname" . }}-status
+            - name: CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL
+              value: {{ template "kafka-connect.schemaRegistry.service-name" .}}
+            - name: CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL
+              value: {{ template "kafka-connect.schemaRegistry.service-name" .}}
+            - name: KAFKA_HEAP_OPTS
+              value: "{{ .Values.heapOptions }}"
+            {{- range $key, $value := .Values.configurationOverrides }}
+            - name: {{ printf "CONNECT_%s" $key | replace "." "_" | upper | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- if .Values.jmx.port }}
+            - name: KAFKA_JMX_PORT
+              value: "{{ .Values.jmx.port }}"
+            {{- end }}
+            {{- if .Values.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: kafka-connect
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: kafka-connect
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.volumeMounts }}
+          volumeMounts:
+{{ toYaml .Values.volumeMounts | indent 10 }}
+          {{- end}}
+      {{- include "kafka-connect.imagePullSecrets" . | nindent 6 }}
+      volumes:
+      {{- if .Values.volumes }}
+{{ toYaml .Values.volumes | trim | indent 6 }}
+      {{- end}}
+      {{- if .Values.prometheus.jmx.enabled }}
+      - name: jmx-config
+        configMap:
+          name: {{ include "jmx.configmapName" . }}
+      {{- end }}
+      nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
+      affinity: {{- include "common.tplvalues.render" (dict "value" .Values.affinity "context" $) | nindent 8 }}
