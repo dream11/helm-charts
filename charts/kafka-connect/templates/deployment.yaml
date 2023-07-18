@@ -81,9 +81,9 @@ spec:
             - name: CONNECT_STATUS_STORAGE_TOPIC
               value: {{ template "kafka-connect.fullname" . }}-status
             - name: CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL
-              value: {{ template "kafka-connect.schema-registry.service-name" .}}
+              value: {{ template "kafka-connect.schemaRegistry.service-name" .}}
             - name: CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL
-              value: {{ template "kafka-connect.schema-registry.service-name" .}}
+              value: {{ template "kafka-connect.schemaRegistry.service-name" .}}
             - name: KAFKA_HEAP_OPTS
               value: "{{ .Values.heapOptions }}"
             {{- range $key, $value := .Values.configurationOverrides }}

@@ -223,10 +223,10 @@ prometheus:
 kafka:
   bootstrapServers: ""
 
-## @param schema-registry.url Schema-Registry url
+## @param schemaRegistry.url Schema Registry url
 # If the Kafka Chart is disabled a URL and port are required to connect
 ## e.g. gnoble-panther-schema-registry:8081
-schema-registry:
+schemaRegistry:
   url: ""
 
 ## @param volumeMounts List of volumeMounts for connect server container

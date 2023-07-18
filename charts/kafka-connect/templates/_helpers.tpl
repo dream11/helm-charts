@@ -78,16 +78,16 @@ else use user-provided URL
 Create a default fully qualified schema registry name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "kafka-connect.schema-registry.fullname" -}}
-{{- $name := default "schema-registry" (index .Values "schema-registry" "nameOverride") -}}
+{{- define "kafka-connect.schemaRegistry.fullname" -}}
+{{- $name := default "schemaRegistry" (index .Values "schemaRegistry" "nameOverride") -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "kafka-connect.schema-registry.service-name" -}}
-{{- if (index .Values "schema-registry" "url") -}}
-{{- printf "%s" (index .Values "schema-registry" "url") -}}
+{{- define "kafka-connect.schemaRegistry.service-name" -}}
+{{- if (index .Values "schemaRegistry" "url") -}}
+{{- printf "%s" (index .Values "schemaRegistry" "url") -}}
 {{- else -}}
-{{- printf "http://%s:8081" (include "kafka-connect.schema-registry.fullname" .) -}}
+{{- printf "http://%s:8081" (include "kafka-connect.schemaRegistry.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 
