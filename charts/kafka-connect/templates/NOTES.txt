@@ -4,6 +4,6 @@ APP VERSION: {{ .Chart.AppVersion }}
 
 ** Please be patient while the chart is being deployed **
 
-Check the cluster status by running:
+Check the cluster status by running (forwards the traffic from your localhost:8000):
 
-{{ include "kafka-connect.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.ports.kafkaConnect }}
+kubectl port-forward --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l app.kubernetes.io/name={{ include "common.names.name" . }},app.kubernetes.io/instance={{ .Release.Name }} -o jsonpath='{.items[0].metadata.name}') 8000:8083

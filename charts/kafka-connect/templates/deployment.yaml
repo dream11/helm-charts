@@ -101,7 +101,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: tcp
+              port: kafka-connect
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
@@ -112,7 +112,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /
-              port: tcp
+              port: kafka-connect
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}

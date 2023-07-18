@@ -24,6 +24,4 @@ spec:
     - name: metrics
       port: {{ .Values.service.ports.jmx }}
     {{- end }}
-  selector:
-    app: {{ template "kafka-connect.name" . }}
-    release: {{ .Release.Name }}
+  selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
