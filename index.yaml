@@ -21,4 +21,23 @@ entries:
     urls:
     - https://github.com/dream11/helm-charts/releases/download/aerospike-1.0.0/aerospike-1.0.0.tgz
     version: 1.0.0
-generated: "2023-06-15T09:35:08.885604314Z"
+  kafka-connect:
+  - apiVersion: v2
+    appVersion: 6.1.0
+    created: "2023-07-18T11:27:34.496451263Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 1.x.x
+    description: Kafka Connect Helm chart
+    digest: 27774c94fb90c5a5bab5b6ccdb7a535f77de14507310f1ac5574ab8be8a37d23
+    maintainers:
+    - name: Dream11
+      url: https://www.dream11.com/
+    name: kafka-connect
+    urls:
+    - https://github.com/dream11/helm-charts/releases/download/kafka-connect-0.1.0/kafka-connect-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-07-18T11:27:34.496456063Z"
