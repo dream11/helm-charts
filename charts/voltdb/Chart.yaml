@@ -1,0 +1,16 @@
+apiVersion: v2
+name: voltdb
+description: Voltdb helm chart
+version: 0.1.0
+appVersion: "9.2.1"
+keywords:
+  - voltdb
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 1.x.x
+maintainers:
+  - name: Dream11
+    url: https://www.dream11.com/

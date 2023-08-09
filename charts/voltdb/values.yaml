@@ -1,0 +1,405 @@
+## @section Global parameters
+## Global Docker image parameters
+## Please, note that this will override the image parameters, including dependencies, configured to use the global value
+## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+##
+
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets Global Docker registry secret names as an array
+## @param global.storageClass Global StorageClass for Persistent Volume(s)
+##
+
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+## @section Common parameters
+##
+
+## @param nameOverride String to partially override common.names.fullname
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname
+##
+fullnameOverride: ""
+## @param commonLabels Labels to add to all deployed objects (sub-charts are not considered)
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+## @param clusterDomain Kubernetes cluster domain name
+##
+clusterDomain: cluster.local
+## @param extraDeploy Array of extra objects to deploy with the release
+##
+extraDeploy: []
+
+## @section Voltdb parameters
+##
+
+## @param image.registry Voltdb image registry
+## @param image.repository Voltdb image repository
+## @param image.tag Voltdb image tag (immutable tags are recommended)
+## @param image.pullPolicy image pull policy
+## @param image.pullSecrets Voltdb image pull secrets
+##
+image:
+  registry: docker.io
+  repository: voltdb/voltdb-community
+  tag: 9.2.1
+  ## Specify a imagePullPolicy
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: IfNotPresent
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ## e.g:
+  ## pullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  pullSecrets: []
+
+## Voltdb configuration
+##
+voltdb:
+  ## @param voltdb.directorySpec Path to directory where voltdb will be initialised
+  ##
+  directorySpec: /var/voltdb
+  ## @param voltdb.importers Importer configuration for voltdb
+  ##
+  importers: []
+  # - type: kafka
+  #   enabled: true
+  #   format: csv
+  #   version: 10
+  #   properties:
+  #     - name: topics
+  #       value: employees
+  #     - name: procedure
+  #       value: EMPLOYEE.insert
+  #     - name: brokers
+  #       value: kafkasvr:9092
+
+  ## @param voltdb.exporters Exporter configuration for voltdb
+  ##
+  exporters: []
+  # - type: kafka
+  #   enabled: true
+  #   target: target
+  #   properties:
+  #     - name: bootstrap.servers
+  #       value: kafkasvr:9092
+  #     - name: topic.prefix
+  #       value: employees
+  #     - name: skipinternals
+  #       value: true
+  #     - name: acks
+  #       value: 1
+
+  ## @param voltdb.sitePerHost Number of unique VoltDB sites that are created on each physical database server
+  ##
+  sitePerHost: 1
+  ## @param voltdb.kfactor Number of times partitions will be replicated
+  ##
+  kfactor: 0
+  ## @param voltdb.snapshots.enabled Enable automated snapshots?
+  ## @param voltdb.snapshots.frequency Frequency for automated snapshots
+  ## @param voltdb.snapshots.prefix Prefix for snapshots
+  ## @param voltdb.snapshots.retentionPeriod Retention period for snapshots in days
+  ##
+  snapshots:
+    enabled: false
+    frequency: 24h
+    prefix: AUTO
+    retentionPeriod: 2
+  ## @param voltdb.commandLog.enabled Enable command logging?
+  ## @param voltdb.commandLog.synchronous Should the logging be synchronous?
+  ## @param voltdb.commandLog.logSize Disk space pre allocated for storing the logs on disk in MBs
+  ## @param voltdb.commandLog.frequency.time Write logs after every <time> milliseconds
+  ## @param voltdb.commandLog.frequency.transactions Write logs after every <transactions> transactions
+  ##
+  commandLog:
+    enabled: false
+    synchronous: false
+    logSize: 1024
+    frequency:
+      time: 200
+      transactions: 1000
+  ## @param voltdb.heartbeat.timeout Heartbeat timeout between nodes
+  ##
+  heartbeat:
+    timeout: 90
+  ## @param voltdb.systemSettings.tempTables.maxSize Max size of temporary tables in MBs
+  ## @param voltdb.systemSettings.snapshot.priority Snapshot priority
+  ## @param voltdb.systemSettings.elastic.duration Time each rebalance transaction will take, in milliseconds
+  ## @param voltdb.systemSettings.elastic.throughput Number of MBs per second that will be processed by the rebalance transactions
+  ## @param voltdb.systemSettings.query.timeout Query timeout in milliseconds
+  ## @param voltdb.systemSettings.procedure.logInfo Log info whenever a task runs for more than specified time in milliseconds
+  ## @param voltdb.systemSettings.resourceMonitor.frequency Frequency at which resource limits are checked
+  ## @param voltdb.systemSettings.resourceMonitor.memoryLimit.size Maximum allowable resident set size
+  ## @param voltdb.systemSettings.resourceMonitor.memoryLimit.alert Alert thresold
+  ##
+  systemSettings:
+    tempTables:
+      maxSize: 100
+    snapshot:
+      priority: 6
+    elastic:
+      duration: 50
+      throughput: 2
+    query:
+      timeout: 10000
+    procedure:
+      logInfo: 10000
+    resourceMonitor:
+      frequency: 60
+      memoryLimit:
+        size: 80%
+        alert: 70%
+
+  ## @param voltdb.security.enabled Enable security?
+  ## @param voltdb.security.provider Security provider
+  ##
+  security:
+    enabled: false
+    provider: hash
+
+  ## Specify voltdb licence configuration
+  ## @param voltdb.license Voltdb license
+  license:
+
+## @param extraEnvVars Extra environment variables to be set on voltdb container
+## For example:
+##  - name: FOO
+##    value: BAR
+##
+extraEnvVars: []
+
+## @section Statefulset parameters
+##
+
+## @param replicaCount Number of Voltdb replicas
+##
+replicaCount: 1
+
+## @param affinity Affinity for pod assignment
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+##
+affinity: {}
+
+## @param nodeSelector Node labels for pod assignment
+## ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
+nodeSelector: {}
+
+## @param updateStrategy.type updateStrategy for Voltdb statefulset
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+##
+updateStrategy:
+  type: RollingUpdate
+
+## @param podManagementPolicy StatefulSet pod management policy
+##
+podManagementPolicy: Parallel
+
+## @param podAnnotations Additional pod annotations
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
+podAnnotations: {}
+## @param podLabels Additional pod labels
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
+podLabels: {}
+
+## Voltdb pods' resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+##
+## We usually recommend not to specify default resources and to leave this as a conscious
+## choice for the user. This also increases chances charts run on environments with little
+## resources, such as Minikube. If you do want to specify resources, uncomment the following
+## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+## @param resources.limits The resources limits for Voltdb containers
+## @param resources.requests The requested resources for Voltdb containers
+##
+resources:
+  ## Example:
+  ## limits:
+  ##    cpu: 2
+  ##    memory: 4Gi
+  ##
+  limits: {}
+  ## Examples:
+  ## requests:
+  ##    cpu: 2
+  ##    memory: 4Gi
+  ##
+  requests: {}
+
+## Configure extra options for Voltdb containers' liveness and readiness probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param livenessProbe.enabled Enable livenessProbe
+## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+## @param livenessProbe.periodSeconds Period seconds for livenessProbe
+## @param livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+## @param livenessProbe.failureThreshold Failure threshold for livenessProbe
+## @param livenessProbe.successThreshold Success threshold for livenessProbe
+##
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
+
+## @param readinessProbe.enabled Enable readinessProbe
+## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+## @param readinessProbe.periodSeconds Period seconds for readinessProbe
+## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
+## @param readinessProbe.successThreshold Success threshold for readinessProbe
+##
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
+
+## Configure extra options for startup probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+## @param startupProbe.enabled Enable startupProbe
+## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param startupProbe.periodSeconds Period seconds for startupProbe
+## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param startupProbe.failureThreshold Failure threshold for startupProbe
+## @param startupProbe.successThreshold Success threshold for startupProbe
+##
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 60
+
+
+## @section RBAC parameters
+##
+
+## Voltdb pods ServiceAccount
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
+serviceAccount:
+  ## @param serviceAccount.create Enable the creation of a ServiceAccount for Voltdb pods
+  ##
+  create: true
+  ## @param serviceAccount.name The name of the ServiceAccount to use.
+  ## If not set and create is true, a name is generated using the voltdb.fullname template
+  ##
+  name: ""
+  ## @param serviceAccount.annotations Annotations for Voltdb Service Account
+  ##
+  annotations: {}
+  ## @param serviceAccount.automountServiceAccountToken Automount API credentials for a service account.
+  ##
+  automountServiceAccountToken: true
+
+## @section Traffic Exposure Parameters
+##
+
+## Voltdb service parameters
+##
+service:
+  ## @param service.type Voltdb service type
+  ##
+  type: ClusterIP
+  ## @param service.ports.client Voltdb service client Port
+  ##
+  ports:
+    client: 21212
+  ## Node ports to expose
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ## @param service.nodePorts.client Node port for client
+  ##
+  nodePorts:
+    client: ""
+  ## @param service.extraPorts Extra ports to expose in the service (normally used with the `sidecar` value)
+  ##
+  extraPorts: []
+  ## @param service.loadBalancerIP LoadBalancerIP if service type is `LoadBalancer`
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
+  ##
+  loadBalancerIP: ""
+  ## @param service.loadBalancerSourceRanges Service Load Balancer sources
+  ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+  ## e.g:
+  ## loadBalancerSourceRanges:
+  ##   - 10.10.10.0/24
+  ##
+  loadBalancerSourceRanges: []
+  ## @param service.clusterIP Service Cluster IP
+  ## e.g.:
+  ## clusterIP: None
+  ##
+  clusterIP: ""
+  ## @param service.externalTrafficPolicy Service external traffic policy
+  ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  ##
+  externalTrafficPolicy: Cluster
+  ## @param service.annotations Provide any additional annotations which may be required.
+  ## This can be used to set the LoadBalancer service type to internal only.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
+  ##
+  annotations: {}
+  ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+  ## If "ClientIP", consecutive client requests will be directed to the same Pod
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+  ## Headless service properties
+  ##
+  headless:
+    ## @param service.headless.annotations Annotations for the headless service.
+    ##
+    annotations: {}
+
+## @section Persistence parameters
+##
+
+## Enable persistence using Persistent Volume Claims
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  ## @param persistence.annotations Persistent Volume Claim annotations
+  ##
+  annotations: {}
+  ## @param persistence.storageClass PVC Storage Class for Voltdb data volume
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  storageClass: ""
+  ## @param persistence.size PVC Storage Request for Voltdb data volume
+  ##
+  size: 8Gi
+  ## @param persistence.accessModes Persistent Volume Access Mode
+  ##
+  accessModes:
+    - ReadWriteOnce
