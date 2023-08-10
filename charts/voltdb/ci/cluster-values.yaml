@@ -1,0 +1,3 @@
+voltdb:
+  kfactor: 2
+replicaCount: 3
