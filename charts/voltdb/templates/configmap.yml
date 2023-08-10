@@ -70,7 +70,7 @@ data:
     </export>
     </deployment>
     
-    {{- if .Values.voltdb.license }}
-    license.xml: |
-  {{ .Values.license | indent 4 }}
-    {{- end }}
+  {{- if .Values.voltdb.license }}
+  license.xml: |
+{{ .Values.voltdb.license | indent 4 }}
+  {{- end }}
