@@ -8,7 +8,7 @@ VoltDB is a commercial in-memory DBMS that is scalable and ACID-compliant.
 
 ## Introduction
 
-This chart bootstraps an [Voltdb](https://hub.docker.com/r/voltdb/voltdb-community) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart bootstraps a [Voltdb](https://hub.docker.com/r/voltdb/voltdb-community) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
 
@@ -67,7 +67,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `image.registry`                                          | Voltdb image registry                                                           | `docker.io`               |
 | `image.repository`                                        | Voltdb image repository                                                         | `voltdb/voltdb-community` |
 | `image.tag`                                               | Voltdb image tag (immutable tags are recommended)                               | `9.2.1`                   |
-| `image.pullPolicy`                                        | image pull policy                                                               | `IfNotPresent`            |
+| `image.pullPolicy`                                        | Image pull policy                                                               | `IfNotPresent`            |
 | `image.pullSecrets`                                       | Voltdb image pull secrets                                                       | `[]`                      |
 | `voltdb.directorySpec`                                    | Path to directory where voltdb will be initialised                              | `/var/voltdb`             |
 | `voltdb.importers`                                        | Importer configuration for voltdb                                               | `[]`                      |
@@ -105,7 +105,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `replicaCount`                       | Number of Voltdb replicas                     | `1`             |
 | `affinity`                           | Affinity for pod assignment                   | `{}`            |
 | `nodeSelector`                       | Node labels for pod assignment                | `{}`            |
-| `updateStrategy.type`                | updateStrategy for Voltdb statefulset         | `RollingUpdate` |
+| `updateStrategy.type`                | Update Strategy for Voltdb statefulset        | `RollingUpdate` |
 | `podManagementPolicy`                | StatefulSet pod management policy             | `Parallel`      |
 | `podAnnotations`                     | Additional pod annotations                    | `{}`            |
 | `podLabels`                          | Additional pod labels                         | `{}`            |

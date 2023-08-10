@@ -46,7 +46,7 @@ extraDeploy: []
 ## @param image.registry Voltdb image registry
 ## @param image.repository Voltdb image repository
 ## @param image.tag Voltdb image tag (immutable tags are recommended)
-## @param image.pullPolicy image pull policy
+## @param image.pullPolicy Image pull policy
 ## @param image.pullSecrets Voltdb image pull secrets
 ##
 image:
@@ -199,7 +199,7 @@ affinity: {}
 ##
 nodeSelector: {}
 
-## @param updateStrategy.type updateStrategy for Voltdb statefulset
+## @param updateStrategy.type Update Strategy for Voltdb statefulset
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
 ##
 updateStrategy:
