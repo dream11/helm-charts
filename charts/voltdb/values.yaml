@@ -72,108 +72,131 @@ voltdb:
   ## @param voltdb.directorySpec Path to directory where voltdb will be initialised
   ##
   directorySpec: /var/voltdb
-  ## @param voltdb.importers Importer configuration for voltdb
-  ##
-  importers: []
-  # - type: kafka
-  #   enabled: true
-  #   format: csv
-  #   version: 10
-  #   properties:
-  #     - name: topics
-  #       value: employees
-  #     - name: procedure
-  #       value: EMPLOYEE.insert
-  #     - name: brokers
-  #       value: kafkasvr:9092
-
-  ## @param voltdb.exporters Exporter configuration for voltdb
-  ##
-  exporters: []
-  # - type: kafka
-  #   enabled: true
-  #   target: target
-  #   properties:
-  #     - name: bootstrap.servers
-  #       value: kafkasvr:9092
-  #     - name: topic.prefix
-  #       value: employees
-  #     - name: skipinternals
-  #       value: true
-  #     - name: acks
-  #       value: 1
-
-  ## @param voltdb.sitePerHost Number of unique VoltDB sites that are created on each physical database server
-  ##
-  sitePerHost: 1
-  ## @param voltdb.kfactor Number of times partitions will be replicated
-  ##
-  kfactor: 0
-  ## @param voltdb.snapshots.enabled Enable automated snapshots?
-  ## @param voltdb.snapshots.frequency Frequency for automated snapshots
-  ## @param voltdb.snapshots.prefix Prefix for snapshots
-  ## @param voltdb.snapshots.retentionPeriod Retention period for snapshots in days
-  ##
-  snapshots:
-    enabled: false
-    frequency: 24h
-    prefix: AUTO
-    retentionPeriod: 2
-  ## @param voltdb.commandLog.enabled Enable command logging?
-  ## @param voltdb.commandLog.synchronous Should the logging be synchronous?
-  ## @param voltdb.commandLog.logSize Disk space pre allocated for storing the logs on disk in MBs
-  ## @param voltdb.commandLog.frequency.time Write logs after every <time> milliseconds
-  ## @param voltdb.commandLog.frequency.transactions Write logs after every <transactions> transactions
-  ##
-  commandLog:
-    enabled: false
-    synchronous: false
-    logSize: 1024
-    frequency:
-      time: 200
-      transactions: 1000
-  ## @param voltdb.heartbeat.timeout Heartbeat timeout between nodes
-  ##
-  heartbeat:
-    timeout: 90
-  ## @param voltdb.systemSettings.tempTables.maxSize Max size of temporary tables in MBs
-  ## @param voltdb.systemSettings.snapshot.priority Snapshot priority
-  ## @param voltdb.systemSettings.elastic.duration Time each rebalance transaction will take, in milliseconds
-  ## @param voltdb.systemSettings.elastic.throughput Number of MBs per second that will be processed by the rebalance transactions
-  ## @param voltdb.systemSettings.query.timeout Query timeout in milliseconds
-  ## @param voltdb.systemSettings.procedure.logInfo Log info whenever a task runs for more than specified time in milliseconds
-  ## @param voltdb.systemSettings.resourceMonitor.frequency Frequency at which resource limits are checked
-  ## @param voltdb.systemSettings.resourceMonitor.memoryLimit.size Maximum allowable resident set size
-  ## @param voltdb.systemSettings.resourceMonitor.memoryLimit.alert Alert thresold
-  ##
-  systemSettings:
-    tempTables:
-      maxSize: 100
-    snapshot:
-      priority: 6
-    elastic:
-      duration: 50
-      throughput: 2
-    query:
-      timeout: 10000
-    procedure:
-      logInfo: 10000
-    resourceMonitor:
-      frequency: 60
-      memoryLimit:
-        size: 80%
-        alert: 70%
-
-  ## @param voltdb.security.enabled Enable security?
-  ## @param voltdb.security.provider Security provider
-  ##
-  security:
-    enabled: false
-    provider: hash
 
   ## Specify voltdb licence configuration
   ## @param voltdb.license Voltdb license
   license:
+
+  deployment:
+    ## @param voltdb.deployment.cluster.hostcount Number of nodes in voltdb cluster
+    ## @param voltdb.deployment.cluster.sitesperhost Number of unique VoltDB sites that are created on each physical database server
+    ## @param voltdb.deployment.cluster.kfactor Number of times partitions will be replicated
+    ##
+    cluster:
+      hostcount: 1
+      sitesperhost: 1
+      kfactor: 0
+
+    ## @param voltdb.deployment.heartbeat.timeout Heartbeat timeout between nodes
+    ##
+    heartbeat:
+      timeout: 90
+
+    ## @param voltdb.deployment.commandlog.enabled Enable command logging?
+    ## @param voltdb.deployment.commandlog.synchronous Should the logging be synchronous?
+    ## @param voltdb.deployment.commandlog.logsize Disk space pre allocated for storing the logs on disk in MBs
+    ## @param voltdb.deployment.commandlog.frequency.time Write logs after every <time> milliseconds
+    ## @param voltdb.deployment.commandlog.frequency.transactions Write logs after every <transactions> transactions
+    ##
+    commandlog:
+      enabled: false
+      synchronous: false
+      logsize: 1024
+      frequency:
+        time: 200
+        transactions: 1000
+
+    ## @param voltdb.deployment.partition-detection.enabled Enable disable partition detection
+    ##
+    partition-detection:
+      enabled: true
+
+    ## @param voltdb.deployment.httpd.enabled Determines if HTTP API daemon is enabled
+    ## @param voltdb.deployment.httpd.jsonapi.enabled Determines if jSON over HTTP API is enabled
+    ##
+    httpd:
+      enabled: true
+      jsonapi:
+        enabled: true
+
+    ## @param voltdb.deployment.snapshot.enabled Enable automated snapshots?
+    ## @param voltdb.deployment.snapshot.frequency Frequency for automated snapshots
+    ## @param voltdb.deployment.snapshot.prefix Prefix for snapshots
+    ## @param voltdb.deployment.snapshot.retain Retention period for snapshots in days
+    ##
+    snapshot:
+      enabled: false
+      frequency: 24h
+      prefix: AUTO
+      retain: 2
+
+    ## @param voltdb.deployment.systemsettings.temptables.maxsize Max size of temporary tables in MBs
+    ## @param voltdb.deployment.systemsettings.snapshot.priority Snapshot priority
+    ## @param voltdb.deployment.systemsettings.elastic.duration Time each rebalance transaction will take, in milliseconds
+    ## @param voltdb.deployment.systemsettings.elastic.throughput Number of MBs per second that will be processed by the rebalance transactions
+    ## @param voltdb.deployment.systemsettings.query.timeout Query timeout in milliseconds
+    ## @param voltdb.deployment.systemsettings.procedure.loginfo Log info whenever a task runs for more than specified time in milliseconds
+    ## @param voltdb.deployment.systemsettings.resourcemonitor.frequency Frequency at which resource limits are checked
+    ## @param voltdb.deployment.systemsettings.resourcemonitor.memorylimit.size Maximum allowable resident set size
+    ## @param voltdb.deployment.systemsettings.resourcemonitor.memorylimit.alert Alert thresold
+    ##
+    systemsettings:
+      temptables:
+        maxsize: 100
+      snapshot:
+        priority: 6
+      elastic:
+        duration: 50
+        throughput: 2
+      query:
+        timeout: 10000
+      procedure:
+        loginfo: 10000
+      resourcemonitor:
+        frequency: 60
+        memorylimit:
+          size: 80%
+          alert: 70%
+
+    ## @param voltdb.deployment.security.enabled Enable security?
+    ## @param voltdb.deployment.security.provider Security provider
+    ##
+    security:
+      enabled: false
+      provider: hash
+
+    ## @param voltdb.deployment.import.configuration Importer configuration for voltdb
+    ##
+    import:
+      configuration: []
+#       - type: kafka
+#         enabled: true
+#         format: csv
+#         version: 10
+#         properties:
+#           - name: topics
+#             value: employees
+#           - name: procedure
+#             value: EMPLOYEE.insert
+#           - name: brokers
+#             value: kafkasvr:9092
+
+    ## @param voltdb.deployment.export.configuration Exporter configuration for voltdb
+    ##
+    export:
+      configuration: []
+#       - type: kafka
+#         enabled: true
+#         target: target
+#         properties:
+#           - name: bootstrap.servers
+#             value: kafkasvr:9092
+#           - name: topic.prefix
+#             value: employees
+#           - name: skipinternals
+#             value: true
+#           - name: acks
+#             value: 1
 
 ## @param extraEnvVars Extra environment variables to be set on voltdb container
 ## For example:

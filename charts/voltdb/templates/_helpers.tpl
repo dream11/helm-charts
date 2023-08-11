@@ -67,3 +67,39 @@ Return path to voltdbroot
 {{- define "voltdb.rootPath" -}}
 {{- printf "%s/voltdbroot" .Values.voltdb.directorySpec -}}
 {{- end -}}
+
+{{/*
+Return terminal paths in a dictionary
+Usage: {{ include "util.terminalPaths" dict }}
+*/}}
+{{- define "util.terminalPaths" -}}
+{{- $terminalPaths := list }}
+{{- range $k, $v := . }}
+    {{- if not (or (kindIs "map" $v) (kindIs "slice" $v)) -}}
+    {{- $terminalPaths = append $terminalPaths (printf "%s=\"%v\"" $k $v) }}
+    {{- end }}
+{{- end }}
+{{- join " " $terminalPaths }}
+{{- end -}}
+
+
+{{/*
+Return voltdb configuration
+*/}}
+{{- define "voltdb.configuration" -}}
+    {{- range $k, $v := .object }}
+        {{- if or (eq "import" $k) (eq "export" $k) -}}
+        {{- else if kindIs "map" $v -}}
+            {{- indent (int $.indentation) (printf "<%s %s>\n" $k (include "util.terminalPaths" $v )) }}
+            {{- printf "%s" (include "voltdb.configuration" (dict "object" $v "indentation" (add .indent 2))) }}
+            {{- printf "</%s>\n" $k -}}
+        {{- else if kindIs "slice" $v -}}
+            {{- range $dict := $v }}
+                {{- printf "%s" (include "voltdb.configuration" (dict "object" (dict $k $dict) "indentation" (add .indent 2))) }}
+            {{- end }}
+        {{- else -}}
+        {{- end -}}
+    {{- end }}
+{{- end -}}
+
+

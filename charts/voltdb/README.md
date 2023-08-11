@@ -62,41 +62,45 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Voltdb parameters
 
-| Name                                                      | Description                                                                     | Value                     |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------- |
-| `image.registry`                                          | Voltdb image registry                                                           | `docker.io`               |
-| `image.repository`                                        | Voltdb image repository                                                         | `voltdb/voltdb-community` |
-| `image.tag`                                               | Voltdb image tag (immutable tags are recommended)                               | `9.2.1`                   |
-| `image.pullPolicy`                                        | Image pull policy                                                               | `IfNotPresent`            |
-| `image.pullSecrets`                                       | Voltdb image pull secrets                                                       | `[]`                      |
-| `voltdb.directorySpec`                                    | Path to directory where voltdb will be initialised                              | `/var/voltdb`             |
-| `voltdb.importers`                                        | Importer configuration for voltdb                                               | `[]`                      |
-| `voltdb.exporters`                                        | Exporter configuration for voltdb                                               | `[]`                      |
-| `voltdb.sitePerHost`                                      | Number of unique VoltDB sites that are created on each physical database server | `1`                       |
-| `voltdb.kfactor`                                          | Number of times partitions will be replicated                                   | `0`                       |
-| `voltdb.snapshots.enabled`                                | Enable automated snapshots?                                                     | `false`                   |
-| `voltdb.snapshots.frequency`                              | Frequency for automated snapshots                                               | `24h`                     |
-| `voltdb.snapshots.prefix`                                 | Prefix for snapshots                                                            | `AUTO`                    |
-| `voltdb.snapshots.retentionPeriod`                        | Retention period for snapshots in days                                          | `2`                       |
-| `voltdb.commandLog.enabled`                               | Enable command logging?                                                         | `false`                   |
-| `voltdb.commandLog.synchronous`                           | Should the logging be synchronous?                                              | `false`                   |
-| `voltdb.commandLog.logSize`                               | Disk space pre allocated for storing the logs on disk in MBs                    | `1024`                    |
-| `voltdb.commandLog.frequency.time`                        | Write logs after every <time> milliseconds                                      | `200`                     |
-| `voltdb.commandLog.frequency.transactions`                | Write logs after every <transactions> transactions                              | `1000`                    |
-| `voltdb.heartbeat.timeout`                                | Heartbeat timeout between nodes                                                 | `90`                      |
-| `voltdb.systemSettings.tempTables.maxSize`                | Max size of temporary tables in MBs                                             | `100`                     |
-| `voltdb.systemSettings.snapshot.priority`                 | Snapshot priority                                                               | `6`                       |
-| `voltdb.systemSettings.elastic.duration`                  | Time each rebalance transaction will take, in milliseconds                      | `50`                      |
-| `voltdb.systemSettings.elastic.throughput`                | Number of MBs per second that will be processed by the rebalance transactions   | `2`                       |
-| `voltdb.systemSettings.query.timeout`                     | Query timeout in milliseconds                                                   | `10000`                   |
-| `voltdb.systemSettings.procedure.logInfo`                 | Log info whenever a task runs for more than specified time in milliseconds      | `10000`                   |
-| `voltdb.systemSettings.resourceMonitor.frequency`         | Frequency at which resource limits are checked                                  | `60`                      |
-| `voltdb.systemSettings.resourceMonitor.memoryLimit.size`  | Maximum allowable resident set size                                             | `80%`                     |
-| `voltdb.systemSettings.resourceMonitor.memoryLimit.alert` | Alert thresold                                                                  | `70%`                     |
-| `voltdb.security.enabled`                                 | Enable security?                                                                | `false`                   |
-| `voltdb.security.provider`                                | Security provider                                                               | `hash`                    |
-| `voltdb.license`                                          | Voltdb license                                                                  | `nil`                     |
-| `extraEnvVars`                                            | Extra environment variables to be set on voltdb container                       | `[]`                      |
+| Name                                                                 | Description                                                                     | Value                     |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------- |
+| `image.registry`                                                     | Voltdb image registry                                                           | `docker.io`               |
+| `image.repository`                                                   | Voltdb image repository                                                         | `voltdb/voltdb-community` |
+| `image.tag`                                                          | Voltdb image tag (immutable tags are recommended)                               | `9.2.1`                   |
+| `image.pullPolicy`                                                   | Image pull policy                                                               | `IfNotPresent`            |
+| `image.pullSecrets`                                                  | Voltdb image pull secrets                                                       | `[]`                      |
+| `voltdb.directorySpec`                                               | Path to directory where voltdb will be initialised                              | `/var/voltdb`             |
+| `voltdb.license`                                                     | Voltdb license                                                                  | `nil`                     |
+| `voltdb.deployment.cluster.hostcount`                                | Number of nodes in voltdb cluster                                               | `1`                       |
+| `voltdb.deployment.cluster.sitesperhost`                             | Number of unique VoltDB sites that are created on each physical database server | `1`                       |
+| `voltdb.deployment.cluster.kfactor`                                  | Number of times partitions will be replicated                                   | `0`                       |
+| `voltdb.deployment.heartbeat.timeout`                                | Heartbeat timeout between nodes                                                 | `90`                      |
+| `voltdb.deployment.commandlog.enabled`                               | Enable command logging?                                                         | `false`                   |
+| `voltdb.deployment.commandlog.synchronous`                           | Should the logging be synchronous?                                              | `false`                   |
+| `voltdb.deployment.commandlog.logsize`                               | Disk space pre allocated for storing the logs on disk in MBs                    | `1024`                    |
+| `voltdb.deployment.commandlog.frequency.time`                        | Write logs after every <time> milliseconds                                      | `200`                     |
+| `voltdb.deployment.commandlog.frequency.transactions`                | Write logs after every <transactions> transactions                              | `1000`                    |
+| `voltdb.deployment.partition-detection.enabled`                      | Enable disable partition detection                                              | `true`                    |
+| `voltdb.deployment.httpd.enabled`                                    | Determines if HTTP API daemon is enabled                                        | `true`                    |
+| `voltdb.deployment.httpd.jsonapi.enabled`                            | Determines if jSON over HTTP API is enabled                                     | `true`                    |
+| `voltdb.deployment.snapshot.enabled`                                 | Enable automated snapshots?                                                     | `false`                   |
+| `voltdb.deployment.snapshot.frequency`                               | Frequency for automated snapshots                                               | `24h`                     |
+| `voltdb.deployment.snapshot.prefix`                                  | Prefix for snapshots                                                            | `AUTO`                    |
+| `voltdb.deployment.snapshot.retain`                                  | Retention period for snapshots in days                                          | `2`                       |
+| `voltdb.deployment.systemsettings.temptables.maxsize`                | Max size of temporary tables in MBs                                             | `100`                     |
+| `voltdb.deployment.systemsettings.snapshot.priority`                 | Snapshot priority                                                               | `6`                       |
+| `voltdb.deployment.systemsettings.elastic.duration`                  | Time each rebalance transaction will take, in milliseconds                      | `50`                      |
+| `voltdb.deployment.systemsettings.elastic.throughput`                | Number of MBs per second that will be processed by the rebalance transactions   | `2`                       |
+| `voltdb.deployment.systemsettings.query.timeout`                     | Query timeout in milliseconds                                                   | `10000`                   |
+| `voltdb.deployment.systemsettings.procedure.loginfo`                 | Log info whenever a task runs for more than specified time in milliseconds      | `10000`                   |
+| `voltdb.deployment.systemsettings.resourcemonitor.frequency`         | Frequency at which resource limits are checked                                  | `60`                      |
+| `voltdb.deployment.systemsettings.resourcemonitor.memorylimit.size`  | Maximum allowable resident set size                                             | `80%`                     |
+| `voltdb.deployment.systemsettings.resourcemonitor.memorylimit.alert` | Alert thresold                                                                  | `70%`                     |
+| `voltdb.deployment.security.enabled`                                 | Enable security?                                                                | `false`                   |
+| `voltdb.deployment.security.provider`                                | Security provider                                                               | `hash`                    |
+| `voltdb.deployment.import.configuration`                             | Importer configuration for voltdb                                               | `[]`                      |
+| `voltdb.deployment.export.configuration`                             | Exporter configuration for voltdb                                               | `[]`                      |
+| `extraEnvVars`                                                       | Extra environment variables to be set on voltdb container                       | `[]`                      |
 
 ### Statefulset parameters
 

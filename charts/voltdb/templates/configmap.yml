@@ -11,7 +11,6 @@ data:
   deployment.xml: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <deployment>
-    <cluster hostcount="{{ .Values.replicaCount }}" sitesperhost="{{ .Values.voltdb.sitePerHost }}" kfactor="{{ .Values.voltdb.kfactor }}" schema="ddl"/>
     <paths>
       <voltdbroot path="{{ include "voltdb.rootPath" . }}"/>
       <snapshots path="{{ include "voltdb.rootPath" . }}/snapshots"/>
@@ -21,36 +20,9 @@ data:
       <commandlogsnapshot path="{{ include "voltdb.rootPath" . }}/command_log_snapshot"/>
       <largequeryswap path="{{ include "voltdb.rootPath" . }}/large_query_swap"/>
     </paths>
-    
-    <heartbeat timeout="{{ .Values.voltdb.heartbeat.timeout }}" />
-    
-    <partition-detection enabled="true" />
-    <ssl enabled="false" external="false" dr="false" internal="false" />
-    
-    <httpd enabled="true">
-      <jsonapi enabled="true"/>
-    </httpd>
-    
-    <snapshot frequency="{{ .Values.voltdb.snapshots.frequency }}" retain="{{ .Values.voltdb.snapshots.retentionPeriod }}" prefix="{{ .Values.voltdb.snapshots.prefix }}" enabled="{{ .Values.voltdb.snapshots.enabled }}" />
-    
-    <commandlog synchronous="{{ .Values.voltdb.commandLog.synchronous }}" enabled="{{ .Values.voltdb.commandLog.enabled }}" logsize="{{ .Values.voltdb.commandLog.logSize }}">
-      <frequency time="{{ .Values.voltdb.commandLog.frequency.time }}" transactions="{{ .Values.voltdb.commandLog.frequency.transactions }}" />
-    </commandlog>
-
-    <systemsettings>
-      <temptables maxsize="{{ .Values.voltdb.systemSettings.tempTables.maxSize }}" />
-      <snapshot priority="{{ .Values.voltdb.systemSettings.snapshot.priority }}" />
-      <elastic duration="{{ .Values.voltdb.systemSettings.elastic.duration }}" throughput="{{ .Values.voltdb.systemSettings.elastic.throughput }}" />
-      <query timeout="{{ .Values.voltdb.systemSettings.query.timeout }}" />
-      <procedure loginfo="{{ .Values.voltdb.systemSettings.procedure.logInfo }}" />
-      <resourcemonitor frequency="{{ .Values.voltdb.systemSettings.resourceMonitor.frequency }}">
-         <memorylimit size="{{ .Values.voltdb.systemSettings.resourceMonitor.memoryLimit.size }}" alert="{{ .Values.voltdb.systemSettings.resourceMonitor.memoryLimit.alert }}" />
-      </resourcemonitor>
-    </systemsettings>
-    <security enabled="{{ .Values.voltdb.security.enabled }}" provider="{{ .Values.voltdb.security.provider }}" />
-
+    {{- include "voltdb.configuration" (dict "object" .Values.voltdb.deployment) | nindent 4 }}
     <import>
-    {{- range .Values.voltdb.importers }}
+    {{- range .Values.voltdb.deployment.import.configuration }}
       <configuration type="{{ .type }}" enabled="{{ .enabled }}" format="{{ .format }}" version="{{ .version }}">
         {{- range .properties }}
         <property name="{{ .name }}">{{ .value }}</property>
@@ -60,7 +32,7 @@ data:
     </import>
 
     <export>
-    {{- range .Values.voltdb.exporters }}
+    {{- range .Values.voltdb.deployment.export.configuration }}
       <configuration type="{{ .type }}" enabled="{{ .enabled }}" target="{{ .target }}">
         {{- range .properties }}
         <property name="{{ .name }}">{{ .value }}</property>
