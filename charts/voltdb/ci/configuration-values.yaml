@@ -1,30 +1,33 @@
 voltdb:
-  importers:
-    - type: kafka
-      enabled: false
-      format: csv
-      version: 10
-      properties:
-        - name: topics
-          value: employees
-        - name: procedure
-          value: EMPLOYEE.insert
-        - name: brokers
-          value: kafkasvr:9092
+  deployment:
+    import:
+      configuration:
+        - type: kafka
+          enabled: false
+          format: csv
+          version: 10
+          properties:
+            - name: topics
+              value: employees
+            - name: procedure
+              value: EMPLOYEE.insert
+            - name: brokers
+              value: kafkasvr:9092
 
-  exporters:
-    - type: kafka
-      enabled: false
-      target: target
-      properties:
-        - name: bootstrap.servers
-          value: kafkasvr:9092
-        - name: topic.prefix
-          value: employees
-        - name: skipinternals
-          value: true
-        - name: acks
-          value: 1
+    export:
+      configuration:
+        - type: kafka
+          enabled: false
+          target: target
+          properties:
+            - name: bootstrap.servers
+              value: kafkasvr:9092
+            - name: topic.prefix
+              value: employees
+            - name: skipinternals
+              value: true
+            - name: acks
+              value: 1
 
-  snapshots:
-    enabled: true
+    snapshot:
+      enabled: true

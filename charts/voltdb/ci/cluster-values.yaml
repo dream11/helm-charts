@@ -1,3 +1,5 @@
 voltdb:
-  kfactor: 2
+  deployment:
+    kfactor: 2
+    hostcount: 3
 replicaCount: 3
