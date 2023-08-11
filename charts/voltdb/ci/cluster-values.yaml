@@ -1,0 +1,6 @@
+voltdb:
+  deployment:
+    cluster:
+      kfactor: 2
+      hostcount: 3
+replicaCount: 3
