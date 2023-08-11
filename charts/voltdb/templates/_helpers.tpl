@@ -82,20 +82,39 @@ Usage: {{ include "util.terminalPaths" dict }}
 {{- join " " $terminalPaths }}
 {{- end -}}
 
+{{/*
+Return if a dictionary is nested
+Usage: {{ include "util.isNested" dict }}
+*/}}
+{{- define "util.isNested" -}}
+{{- $isNested := false -}}
+{{- range $k, $v := . }}
+    {{- if or (kindIs "map" $v) (kindIs "slice" $v) -}}
+        {{- $isNested = true -}}
+    {{- end }}
+{{- end }}
+{{- $isNested }}
+{{- end -}}
 
 {{/*
 Return voltdb configuration
 */}}
 {{- define "voltdb.configuration" -}}
+    {{- $currentIndentation:= ($.indentation | default "") -}}
     {{- range $k, $v := .object }}
         {{- if or (eq "import" $k) (eq "export" $k) -}}
         {{- else if kindIs "map" $v -}}
-            {{- indent (int $.indentation) (printf "<%s %s>\n" $k (include "util.terminalPaths" $v )) }}
-            {{- printf "%s" (include "voltdb.configuration" (dict "object" $v "indentation" (add .indent 2))) }}
-            {{- printf "</%s>\n" $k -}}
+
+            {{- if eq "false" (include "util.isNested" $v) -}}
+                {{- printf "%s<%s %s/>\n" $currentIndentation $k (include "util.terminalPaths" $v ) }}
+            {{- else -}}
+                {{- printf "%s<%s %s>\n" $currentIndentation $k (include "util.terminalPaths" $v ) }}
+                {{- printf "%s" (include "voltdb.configuration" (dict "object" $v "indentation" (printf "%s  " $currentIndentation))) }}
+                {{- printf "%s</%s>\n" $currentIndentation $k -}}
+            {{- end -}}
         {{- else if kindIs "slice" $v -}}
             {{- range $dict := $v }}
-                {{- printf "%s" (include "voltdb.configuration" (dict "object" (dict $k $dict) "indentation" (add .indent 2))) }}
+                {{- printf "%s" (include "voltdb.configuration" (dict "object" (dict $k $dict) "indentation" (printf "%s" $currentIndentation))) }}
             {{- end }}
         {{- else -}}
         {{- end -}}

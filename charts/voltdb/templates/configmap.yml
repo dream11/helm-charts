@@ -11,35 +11,35 @@ data:
   deployment.xml: |
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <deployment>
-    <paths>
-      <voltdbroot path="{{ include "voltdb.rootPath" . }}"/>
-      <snapshots path="{{ include "voltdb.rootPath" . }}/snapshots"/>
-      <exportoverflow path="{{ include "voltdb.rootPath" . }}/export_overflow"/>
-      <droverflow path="{{ include "voltdb.rootPath" . }}/dr_overflow"/>
-      <commandlog path="{{ include "voltdb.rootPath" . }}/command_log"/>
-      <commandlogsnapshot path="{{ include "voltdb.rootPath" . }}/command_log_snapshot"/>
-      <largequeryswap path="{{ include "voltdb.rootPath" . }}/large_query_swap"/>
-    </paths>
-    {{- include "voltdb.configuration" (dict "object" .Values.voltdb.deployment) | nindent 4 }}
-    <import>
-    {{- range .Values.voltdb.deployment.import.configuration }}
-      <configuration type="{{ .type }}" enabled="{{ .enabled }}" format="{{ .format }}" version="{{ .version }}">
-        {{- range .properties }}
-        <property name="{{ .name }}">{{ .value }}</property>
-        {{- end }}
-      </configuration>
-    {{- end }}
-    </import>
-
-    <export>
-    {{- range .Values.voltdb.deployment.export.configuration }}
-      <configuration type="{{ .type }}" enabled="{{ .enabled }}" target="{{ .target }}">
-        {{- range .properties }}
-        <property name="{{ .name }}">{{ .value }}</property>
-        {{- end }}
-      </configuration>
-    {{- end }}
-    </export>
+      <paths>
+        <voltdbroot path="{{ include "voltdb.rootPath" . }}"/>
+        <snapshots path="{{ include "voltdb.rootPath" . }}/snapshots"/>
+        <exportoverflow path="{{ include "voltdb.rootPath" . }}/export_overflow"/>
+        <droverflow path="{{ include "voltdb.rootPath" . }}/dr_overflow"/>
+        <commandlog path="{{ include "voltdb.rootPath" . }}/command_log"/>
+        <commandlogsnapshot path="{{ include "voltdb.rootPath" . }}/command_log_snapshot"/>
+        <largequeryswap path="{{ include "voltdb.rootPath" . }}/large_query_swap"/>
+      </paths>
+      {{- include "voltdb.configuration" (dict "object" .Values.voltdb.deployment) | nindent 6 }}
+      <import>
+      {{- range .Values.voltdb.deployment.import.configuration }}
+        <configuration type="{{ .type }}" enabled="{{ .enabled }}" format="{{ .format }}" version="{{ .version }}">
+          {{- range .properties }}
+          <property name="{{ .name }}">{{ .value }}</property>
+          {{- end }}
+        </configuration>
+      {{- end }}
+      </import>
+  
+      <export>
+      {{- range .Values.voltdb.deployment.export.configuration }}
+        <configuration type="{{ .type }}" enabled="{{ .enabled }}" target="{{ .target }}">
+          {{- range .properties }}
+          <property name="{{ .name }}">{{ .value }}</property>
+          {{- end }}
+        </configuration>
+      {{- end }}
+      </export>
     </deployment>
     
   {{- if .Values.voltdb.license }}
