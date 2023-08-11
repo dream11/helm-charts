@@ -40,4 +40,25 @@ entries:
     urls:
     - https://github.com/dream11/helm-charts/releases/download/kafka-connect-0.1.0/kafka-connect-0.1.0.tgz
     version: 0.1.0
-generated: "2023-07-18T11:27:34.496456063Z"
+  voltdb:
+  - apiVersion: v2
+    appVersion: 9.2.1
+    created: "2023-08-11T10:02:07.751758891Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 1.x.x
+    description: Voltdb helm chart
+    digest: 725ab88316ce6b3356da584b25a8473b6bb697df293cd976fcc42b5950dd63c7
+    keywords:
+    - voltdb
+    maintainers:
+    - name: Dream11
+      url: https://www.dream11.com/
+    name: voltdb
+    urls:
+    - https://github.com/dream11/helm-charts/releases/download/voltdb-0.1.0/voltdb-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-08-11T10:02:07.751772391Z"
