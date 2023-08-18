@@ -1,7 +1,7 @@
 apiVersion: v2
 name: kafka-connect
 description: Kafka Connect Helm chart
-version: 0.1.0
+version: 0.1.1
 appVersion: "6.1.0"
 dependencies:
   - name: common
