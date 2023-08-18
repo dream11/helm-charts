@@ -24,6 +24,24 @@ entries:
   kafka-connect:
   - apiVersion: v2
     appVersion: 6.1.0
+    created: "2023-08-18T10:35:46.907810948Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 1.x.x
+    description: Kafka Connect Helm chart
+    digest: d75a89a82cf87744d986ad86cc308085fc5363e61dd365cf281afcacf74c1a76
+    maintainers:
+    - name: Dream11
+      url: https://www.dream11.com/
+    name: kafka-connect
+    urls:
+    - https://github.com/dream11/helm-charts/releases/download/kafka-connect-0.1.1/kafka-connect-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 6.1.0
     created: "2023-07-18T11:27:34.496451263Z"
     dependencies:
     - name: common
@@ -61,4 +79,4 @@ entries:
     urls:
     - https://github.com/dream11/helm-charts/releases/download/voltdb-0.1.0/voltdb-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-11T10:02:07.751772391Z"
+generated: "2023-08-18T10:35:46.907826648Z"
