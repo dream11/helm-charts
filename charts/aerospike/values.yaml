@@ -128,6 +128,17 @@ replicaCount: 1
 ##
 nodeSelector: {}
 
+## @param tolerations Toleration for pod
+## For example:
+## tolerations:
+## - key: "key1"
+##   operator: "Equal"
+##   value: "value1"
+##   effect: "NoSchedule"
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+##
+tolerations: []
+
 ## @param updateStrategy.type updateStrategy for Aerospike statefulset
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
 ##
