@@ -30,6 +30,9 @@ spec:
         {{- end }}
       {{- end }}
     spec:
+      {{- if .Values.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
+      {{- end }}
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
       {{- include "aerospike.imagePullSecrets" . | nindent 6 }}
       serviceAccountName: {{ template "aerospike.serviceAccountName" . }}
