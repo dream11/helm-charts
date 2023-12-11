@@ -80,6 +80,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | Name                                 | Description                                      | Value           |
 | ------------------------------------ | ------------------------------------------------ | --------------- |
 | `replicaCount`                       | Number of Aerospike replicas                     | `1`             |
+| `tolerations `                       | Toleration for pod                               | `[]`            |
 | `nodeSelector`                       | Node labels for pod assignment                   | `{}`            |
 | `updateStrategy.type`                | updateStrategy for Aerospike statefulset         | `RollingUpdate` |
 | `podManagementPolicy`                | StatefulSet pod management policy                | `OrderedReady`  |
