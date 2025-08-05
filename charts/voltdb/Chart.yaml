@@ -1,7 +1,7 @@
 apiVersion: v2
 name: voltdb
 description: Voltdb helm chart
-version: 0.1.0
+version: 0.1.1
 appVersion: "9.2.1"
 keywords:
   - voltdb
