@@ -31,6 +31,9 @@ spec:
       {{- end }}
     spec:
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
+      {{- if .Values.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
+      {{- end }}
       {{- include "voltdb.imagePullSecrets" . | nindent 6 }}
       serviceAccountName: {{ template "voltdb.serviceAccountName" . }}
       {{- if .Values.affinity }}
