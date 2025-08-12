@@ -222,6 +222,7 @@ affinity: {}
 ##
 nodeSelector: {}
 
+## @param tolerations Tolerations allow Pods to be scheduled on Nodes that have matching taints
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 ##
 tolerations: []

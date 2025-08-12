@@ -104,35 +104,36 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Statefulset parameters
 
-| Name                                 | Description                                   | Value           |
-| ------------------------------------ | --------------------------------------------- | --------------- |
-| `replicaCount`                       | Number of Voltdb replicas                     | `1`             |
-| `affinity`                           | Affinity for pod assignment                   | `{}`            |
-| `nodeSelector`                       | Node labels for pod assignment                | `{}`            |
-| `updateStrategy.type`                | Update Strategy for Voltdb statefulset        | `RollingUpdate` |
-| `podManagementPolicy`                | StatefulSet pod management policy             | `Parallel`      |
-| `podAnnotations`                     | Additional pod annotations                    | `{}`            |
-| `podLabels`                          | Additional pod labels                         | `{}`            |
-| `resources.limits`                   | The resources limits for Voltdb containers    | `{}`            |
-| `resources.requests`                 | The requested resources for Voltdb containers | `{}`            |
-| `livenessProbe.enabled`              | Enable livenessProbe                          | `true`          |
-| `livenessProbe.initialDelaySeconds`  | Initial delay seconds for livenessProbe       | `30`            |
-| `livenessProbe.periodSeconds`        | Period seconds for livenessProbe              | `30`            |
-| `livenessProbe.timeoutSeconds`       | Timeout seconds for livenessProbe             | `5`             |
-| `livenessProbe.failureThreshold`     | Failure threshold for livenessProbe           | `5`             |
-| `livenessProbe.successThreshold`     | Success threshold for livenessProbe           | `1`             |
-| `readinessProbe.enabled`             | Enable readinessProbe                         | `true`          |
-| `readinessProbe.initialDelaySeconds` | Initial delay seconds for readinessProbe      | `30`            |
-| `readinessProbe.periodSeconds`       | Period seconds for readinessProbe             | `10`            |
-| `readinessProbe.timeoutSeconds`      | Timeout seconds for readinessProbe            | `5`             |
-| `readinessProbe.failureThreshold`    | Failure threshold for readinessProbe          | `5`             |
-| `readinessProbe.successThreshold`    | Success threshold for readinessProbe          | `1`             |
-| `startupProbe.enabled`               | Enable startupProbe                           | `false`         |
-| `startupProbe.initialDelaySeconds`   | Initial delay seconds for startupProbe        | `0`             |
-| `startupProbe.periodSeconds`         | Period seconds for startupProbe               | `10`            |
-| `startupProbe.timeoutSeconds`        | Timeout seconds for startupProbe              | `5`             |
-| `startupProbe.failureThreshold`      | Failure threshold for startupProbe            | `60`            |
-| `startupProbe.successThreshold`      | Success threshold for startupProbe            | `1`             |
+| Name                                 | Description                                                               | Value           |
+| ------------------------------------ | ------------------------------------------------------------------------- | --------------- |
+| `replicaCount`                       | Number of Voltdb replicas                                                 | `1`             |
+| `affinity`                           | Affinity for pod assignment                                               | `{}`            |
+| `nodeSelector`                       | Node labels for pod assignment                                            | `{}`            |
+| `tolerations`                        | Tolerations allow Pods to be scheduled on Nodes that have matching taints | `[]`            |
+| `updateStrategy.type`                | Update Strategy for Voltdb statefulset                                    | `RollingUpdate` |
+| `podManagementPolicy`                | StatefulSet pod management policy                                         | `Parallel`      |
+| `podAnnotations`                     | Additional pod annotations                                                | `{}`            |
+| `podLabels`                          | Additional pod labels                                                     | `{}`            |
+| `resources.limits`                   | The resources limits for Voltdb containers                                | `{}`            |
+| `resources.requests`                 | The requested resources for Voltdb containers                             | `{}`            |
+| `livenessProbe.enabled`              | Enable livenessProbe                                                      | `true`          |
+| `livenessProbe.initialDelaySeconds`  | Initial delay seconds for livenessProbe                                   | `30`            |
+| `livenessProbe.periodSeconds`        | Period seconds for livenessProbe                                          | `30`            |
+| `livenessProbe.timeoutSeconds`       | Timeout seconds for livenessProbe                                         | `5`             |
+| `livenessProbe.failureThreshold`     | Failure threshold for livenessProbe                                       | `5`             |
+| `livenessProbe.successThreshold`     | Success threshold for livenessProbe                                       | `1`             |
+| `readinessProbe.enabled`             | Enable readinessProbe                                                     | `true`          |
+| `readinessProbe.initialDelaySeconds` | Initial delay seconds for readinessProbe                                  | `30`            |
+| `readinessProbe.periodSeconds`       | Period seconds for readinessProbe                                         | `10`            |
+| `readinessProbe.timeoutSeconds`      | Timeout seconds for readinessProbe                                        | `5`             |
+| `readinessProbe.failureThreshold`    | Failure threshold for readinessProbe                                      | `5`             |
+| `readinessProbe.successThreshold`    | Success threshold for readinessProbe                                      | `1`             |
+| `startupProbe.enabled`               | Enable startupProbe                                                       | `false`         |
+| `startupProbe.initialDelaySeconds`   | Initial delay seconds for startupProbe                                    | `0`             |
+| `startupProbe.periodSeconds`         | Period seconds for startupProbe                                           | `10`            |
+| `startupProbe.timeoutSeconds`        | Timeout seconds for startupProbe                                          | `5`             |
+| `startupProbe.failureThreshold`      | Failure threshold for startupProbe                                        | `60`            |
+| `startupProbe.successThreshold`      | Success threshold for startupProbe                                        | `1`             |
 
 ### RBAC parameters
 
