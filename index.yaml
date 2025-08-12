@@ -81,6 +81,26 @@ entries:
   voltdb:
   - apiVersion: v2
     appVersion: 9.2.1
+    created: "2025-08-12T17:30:57.193037936Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 1.x.x
+    description: Voltdb helm chart
+    digest: 0eeb0f663a67a7d1ed4ac607f996fc6c32ec7b22850742df4bfde729b261ab12
+    keywords:
+    - voltdb
+    maintainers:
+    - name: Dream11
+      url: https://www.dream11.com/
+    name: voltdb
+    urls:
+    - https://github.com/dream11/helm-charts/releases/download/voltdb-0.1.1/voltdb-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 9.2.1
     created: "2023-08-11T10:02:07.751758891Z"
     dependencies:
     - name: common
@@ -99,4 +119,4 @@ entries:
     urls:
     - https://github.com/dream11/helm-charts/releases/download/voltdb-0.1.0/voltdb-0.1.0.tgz
     version: 0.1.0
-generated: "2023-12-11T10:35:46.893163281Z"
+generated: "2025-08-12T17:30:57.193056701Z"
