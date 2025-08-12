@@ -51,7 +51,7 @@ extraDeploy: []
 ##
 image:
   registry: docker.io
-  repository: basvanbeek/voltdb-community
+  repository: voltdb/voltdb-community
   tag: 9.2.1
   ## Specify a imagePullPolicy
   ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -221,6 +221,10 @@ affinity: {}
 ## ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
 nodeSelector: {}
+
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+##
+tolerations: []
 
 ## @param updateStrategy.type Update Strategy for Voltdb statefulset
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
