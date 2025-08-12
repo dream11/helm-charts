@@ -51,7 +51,7 @@ extraDeploy: []
 ##
 image:
   registry: docker.io
-  repository: voltdb/voltdb-community
+  repository: basvanbeek/voltdb-community
   tag: 9.2.1
   ## Specify a imagePullPolicy
   ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
